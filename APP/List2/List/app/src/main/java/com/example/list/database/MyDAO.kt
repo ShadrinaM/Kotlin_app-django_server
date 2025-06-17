@@ -67,8 +67,4 @@ interface MyDAO {
 
     @Query("DELETE FROM groups")
     suspend fun deleteAllGroups()
-
-
-
-
 }

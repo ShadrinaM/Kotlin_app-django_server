@@ -10,7 +10,8 @@ private const val CONNECT_TIMEOUT_INTERNAL_SEC = 10L
 private const val READ_TIMEOUT_INTERNAL_SEC = 10L
 private const val WRITE_TIMEOUT_INTERNAL_SEC = 10L
 private const val BASE_URL = "http://10.0.2.2:4207/"
-//private const val BASE_URL = "http://192.168.1.69:8000/"
+//private const val BASE_URL = "http://192.168.1.69:4207/"
+
 
 object ListConnection {
     private var retrofit: Retrofit? = null

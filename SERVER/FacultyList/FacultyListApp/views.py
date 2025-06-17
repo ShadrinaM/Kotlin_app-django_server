@@ -1,16 +1,14 @@
-from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
 from .models import Faculty
 from .serializers import FacultySerializer
 
-
 @api_view(['GET'])
 def get_faculties(request):
-    faculties = Faculty.objects.all()
+    faculties = Faculty.objects.all().order_by('name')
     serializer = FacultySerializer(faculties, many=True)
     return Response(serializer.data)
-
 
 @api_view(['POST'])
 def post_faculty(request):
@@ -20,7 +18,6 @@ def post_faculty(request):
         return Response(status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['DELETE'])
 def delete_faculty(request, id):
     try:
@@ -28,4 +25,4 @@ def delete_faculty(request, id):
         faculty.delete()
         return Response(status=status.HTTP_200_OK)
     except Faculty.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response({'error': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
