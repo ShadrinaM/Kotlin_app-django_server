@@ -87,7 +87,7 @@ class StudentsListFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(StudentsListViewModel::class.java)
         viewModel.set_Group(group)
 
-//        //Сама поменяла
+//        //изменённое
 //        viewModel.studentList.observe(viewLifecycleOwner) {
 //            binding.rvStudents.adapter=
 //                StudentAdapter(it.filter { it.groupID == group.id })
@@ -110,7 +110,7 @@ class StudentsListFragment : Fragment() {
         binding.fabAddStudent.setOnClickListener {
             editStudent(Student().apply { groupID = group.id })
         }
-//        Вот до этих пор
+        //        Вот до сюда изменённое
     }
 
     private fun deleteDialog() {
@@ -130,8 +130,9 @@ class StudentsListFragment : Fragment() {
         (requireActivity() as MainActivityCallbacks).showFragment(NamesOfFragment.STUDENT, student)
         (requireActivity() as MainActivityCallbacks).newTitle("Группа ${viewModel.group!!.name}")
     }
-// Сама поменяла!!!
-//    private inner class StudentAdapter(private val items: List<Student>)
+
+    // поменяла!!!
+    //    private inner class StudentAdapter(private val items: List<Student>)
     private inner class StudentAdapter(private var items: List<Student>)
         : RecyclerView.Adapter<StudentAdapter.ItemHolder>() {
 
@@ -144,10 +145,10 @@ class StudentsListFragment : Fragment() {
         }
 
         override fun getItemCount(): Int = items.size
-//    Сама поменяла вот эти две строки!!!
-//        override fun onBindViewHolder(holder: StudentAdapter.ItemHolder, position: Int) {
+        // Сама поменяла вот эти две строки!!!
+        // override fun onBindViewHolder(holder: StudentAdapter.ItemHolder, position: Int) {
         override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-//            holder.bind(viewModel.studentList.value!![position])
+        // holder.bind(viewModel.studentList.value!![position])
             holder.bind(items[position])
         }
         private var lastView : View? = null
@@ -167,7 +168,7 @@ class StudentsListFragment : Fragment() {
             lastView=view
         }
 
-//    Сама вставила updateItems!!!!
+        // Сама вставила updateItems!!!!
         fun updateItems(newItems: List<Student>) {
             items = newItems
             notifyDataSetChanged()
@@ -179,8 +180,8 @@ class StudentsListFragment : Fragment() {
                 @OptIn(DelicateCoroutinesApi::class)
                 fun bind(student: Student) {
                     this.student=student
-//                    Сама поменяла!!!
-//                    if (student == viewModel.student)
+                    // поменяла!!!
+                    // if (student == viewModel.student)
                     if (student.id == viewModel.student?.id)
                         updateCurrentView(itemView)
                     val tv = itemView.findViewById<TextView>(R.id.tvStudentName)
@@ -216,7 +217,7 @@ class StudentsListFragment : Fragment() {
                         if (student.phone.isNotBlank())
                             ib.visibility = View.VISIBLE
                         MainScope().launch {
-//                            Здесь был знак вопроса после llb
+                            // Здесь был знак вопроса после llb
                             val lp = llb.layoutParams
                             lp?.width = 1
                             val ip = ib.layoutParams
