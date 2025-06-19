@@ -63,20 +63,24 @@ class MainActivity : AppCompatActivity(), MainActivityCallbacks {
     private var _miAppendFaculty: MenuItem? = null
     private var _miUpdateFaculty: MenuItem? = null
     private var _miDeleteFaculty: MenuItem? = null
+    private var _miRefreshFaculty: MenuItem? = null
 
     private var _miAppendGroup: MenuItem? = null
     private var _miUpdateGroup: MenuItem? = null
     private var _miDeleteGroup: MenuItem? = null
+    private var _miRefreshGroups: MenuItem? = null
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         _miAppendFaculty = menu?.findItem(R.id.miNewFaculty)
         _miUpdateFaculty = menu?.findItem(R.id.miChangeFaculty)
         _miDeleteFaculty = menu?.findItem(R.id.miDeleteFaculty)
+        _miRefreshFaculty = menu?.findItem(R.id.miRefreshFaculty)
 
         _miAppendGroup = menu?.findItem(R.id.miAppendGroup)
         _miUpdateGroup = menu?.findItem(R.id.miUpdateGroup)
         _miDeleteGroup = menu?.findItem(R.id.miDeleteGroup)
+        _miRefreshGroups = menu?.findItem(R.id.miRefreshGroups)
         updateMenu(activeFragment)
         return true
     }
@@ -87,10 +91,12 @@ class MainActivity : AppCompatActivity(), MainActivityCallbacks {
         _miAppendFaculty?.isVisible = fragmentType==NamesOfFragment.FACULTY
         _miUpdateFaculty?.isVisible = fragmentType==NamesOfFragment.FACULTY
         _miDeleteFaculty?.isVisible = fragmentType==NamesOfFragment.FACULTY
+        _miRefreshFaculty?.isVisible = fragmentType == NamesOfFragment.FACULTY
 
         _miAppendGroup?.isVisible = fragmentType==NamesOfFragment.GROUP
         _miUpdateGroup?.isVisible = fragmentType==NamesOfFragment.GROUP
         _miDeleteGroup?.isVisible = fragmentType==NamesOfFragment.GROUP
+        _miRefreshGroups?.isVisible = fragmentType == NamesOfFragment.GROUP
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

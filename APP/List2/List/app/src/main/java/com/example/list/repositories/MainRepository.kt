@@ -38,11 +38,11 @@ class MainRepository private constructor() {
         }
     }
 
-//    var listOfFaculty : MutableLiveData<ListOfFaculty> = MutableLiveData()
     var faculty: MutableLiveData<Faculty> = MutableLiveData()
     var student: MutableLiveData<Student> = MutableLiveData()
     var group: MutableLiveData<Group> = MutableLiveData()
 
+//    var listOfFaculty : MutableLiveData<ListOfFaculty> = MutableLiveData()
 //    fun addFaculty(faculty: Faculty) {
 //        val listTmp = (listOfFaculty.value ?: ListOfFaculty()).apply {
 //            items.add(faculty)
@@ -122,27 +122,27 @@ class MainRepository private constructor() {
     val listOfFaculty: LiveData<List<Faculty>> = listDB.getFaculty()
         .asLiveData()
 
-    fun addFacultyDB(faculty: Faculty){
-        myCoroutineScope.launch {
-            listDB.insertFaculty(faculty)
-            setCurrentFaculty(faculty)
-        }
-    }
-    fun updateFacultyDB(faculty: Faculty){
-        addFacultyDB(faculty)
-    }
-    fun deleteFacultyDB(faculty: Faculty){
-        myCoroutineScope.launch {
-            listDB.deleteFaculty(faculty)
-            setCurrentFaculty(0)
-        }
-    }
-
-    fun setCurrentFaculty(position: Int){
-        if (position<0 || (listOfFaculty.value?.size!!<=position))
-            return
-        setCurrentFaculty(listOfFaculty.value!![position])
-    }
+//    fun addFacultyDB(faculty: Faculty){
+//        myCoroutineScope.launch {
+//            listDB.insertFaculty(faculty)
+//            setCurrentFaculty(faculty)
+//        }
+//    }
+//    fun updateFacultyDB(faculty: Faculty){
+//        addFacultyDB(faculty)
+//    }
+//    fun deleteFacultyDB(faculty: Faculty){
+//        myCoroutineScope.launch {
+//            listDB.deleteFaculty(faculty)
+//            setCurrentFaculty(0)
+//        }
+//    }
+//
+//    fun setCurrentFaculty(position: Int){
+//        if (position<0 || (listOfFaculty.value?.size!!<=position))
+//            return
+//        setCurrentFaculty(listOfFaculty.value!![position])
+//    }
 
     fun setCurrentFaculty(_faculty:Faculty) {
         faculty.postValue(_faculty) // нижнее подчеркивание - это вместо this
@@ -216,7 +216,7 @@ val listOfStudent: LiveData<List<Student>> = listDB.getAllStudents()
 
     private var listAPI = ListConnection.getClient().create(serverAPI::class.java)
 
-//    Факультеты
+//    ФАКУЛЬТЕТЫ
 
     fun fetchFaculties() {
         Log.d(MyConsts.TAG, "получение списка факультетов")
@@ -233,7 +233,6 @@ val listOfStudent: LiveData<List<Student>> = listDB.getAllStudents()
                         for (f in faculties ?: emptyList()) {
                             listDB.insertFaculty(f)
                         }
-                        // Убедимся, что факультеты загружены перед загрузкой групп
                         fetchGroups()
                     }
                 }
@@ -277,7 +276,7 @@ val listOfStudent: LiveData<List<Student>> = listDB.getAllStudents()
             })
     }
 
-//    Группы
+//    ГРУППЫ
 
     fun fetchGroups() {
         Log.d(MyConsts.TAG, "получение списка групп")
@@ -341,7 +340,7 @@ val listOfStudent: LiveData<List<Student>> = listDB.getAllStudents()
             })
     }
 
-//    Студенты
+//    СТУДЕНТЫ
 
     fun fetchStudents() {
         Log.d(MyConsts.TAG, "получение списка студентов")
@@ -369,21 +368,7 @@ val listOfStudent: LiveData<List<Student>> = listDB.getAllStudents()
         })
     }
 
-//    private fun updateStudents(student: Student) {
-//        listAPI.postStudent(student)
-//            .enqueue(object:Callback<Unit> {
-//                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
-//                    if (response.code() == 200) fetchStudents()
-//                }
-//                override fun onFailure(call: Call<Unit>, t: Throwable) {
-//                    Log.d(MyConsts.TAG, "Ошибка записи студента", t)
-//                }
-//            }
-//            )
-//    }
-
     private fun updateStudents(student: Student) {
-        // Логируем отправляемые данные
         Log.d(MyConsts.TAG, "Отправка студента на сервер: ${Gson().toJson(student)}")
 
         listAPI.postStudent(student)
@@ -393,7 +378,6 @@ val listOfStudent: LiveData<List<Student>> = listDB.getAllStudents()
                         Log.d(MyConsts.TAG, "Студент успешно сохранён")
                         fetchStudents()
                     } else {
-                        // Логируем ошибку от сервера
                         val errorBody = response.errorBody()?.string()
                         Log.e(MyConsts.TAG,
                             """
@@ -437,5 +421,4 @@ val listOfStudent: LiveData<List<Student>> = listDB.getAllStudents()
                 }
             })
     }
-
 }
