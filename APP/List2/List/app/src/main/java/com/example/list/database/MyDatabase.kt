@@ -11,7 +11,7 @@ import com.example.list.Data.Student
 
 @Database(
     entities = [Faculty::class, Student::class, Group::class,],
-    version = 11,
+    version = 12,
     exportSchema = false
 )
 @TypeConverters(DBConverters::class)
@@ -35,6 +35,5 @@ abstract class MyDatabase: RoomDatabase() {
             "list_database")
             .fallbackToDestructiveMigration(false)
             .build()
-
     }
 }
