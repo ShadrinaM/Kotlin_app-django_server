@@ -176,6 +176,4 @@ class FacultyFragment : Fragment(), MainActivity.Edit {
         mainActivity?.newTitle("Список факультетов")
         super.onAttach(context)
     }
-
-
 }

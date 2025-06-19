@@ -3,6 +3,7 @@ package com.example.list
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity(), MainActivityCallbacks {
                 finish()
             }
         }
+        MainRepository.getInstance().fetchFaculties()
         showFragment(NamesOfFragment.FACULTY)
     }
 
@@ -118,7 +120,16 @@ class MainActivity : AppCompatActivity(), MainActivityCallbacks {
                 GroupFragment.getInstance().delete()
                 true
             }
-
+            R.id.miRefreshFaculty -> {
+                MainRepository.getInstance().fetchFaculties()
+                Toast.makeText(this, "Обновление факультетов...", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.miRefreshGroups -> {
+                MainRepository.getInstance().fetchGroups()
+                Toast.makeText(this, "Обновление групп...", Toast.LENGTH_SHORT).show()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

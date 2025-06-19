@@ -224,10 +224,7 @@ val listOfStudent: LiveData<List<Student>> = listDB.getAllStudents()
             override fun onFailure(call: Call<List<Faculty>>, t: Throwable) {
                 Log.d(MyConsts.TAG, "Ошибка получения списка факультетов", t)
             }
-            override fun onResponse(
-                call: Call<List<Faculty>>,
-                response: Response<List<Faculty>>
-            ) {
+            override fun onResponse(call: Call<List<Faculty>>, response: Response<List<Faculty>>) {
                 if (response.code() == 200) {
                     val faculties = response.body()
                     Log.d(MyConsts.TAG, "Получен список факультетов $faculties")
@@ -236,8 +233,9 @@ val listOfStudent: LiveData<List<Student>> = listDB.getAllStudents()
                         for (f in faculties ?: emptyList()) {
                             listDB.insertFaculty(f)
                         }
+                        // Убедимся, что факультеты загружены перед загрузкой групп
+                        fetchGroups()
                     }
-                    fetchGroups()
                 }
             }
 
@@ -308,16 +306,17 @@ val listOfStudent: LiveData<List<Student>> = listDB.getAllStudents()
     }
 
     private fun updateGroups(group: Group) {
+        Log.d(MyConsts.TAG, "Отправка группы на сервер: ${Gson().toJson(group)}")
         listAPI.postGroup(group)
-            .enqueue(object:Callback<Unit> {
+            .enqueue(object : Callback<Unit> {
                 override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                     if (response.code() == 200) fetchGroups()
+                    else Log.e(MyConsts.TAG, "Ошибка ${response.code()}: ${response.errorBody()?.string()}")
                 }
                 override fun onFailure(call: Call<Unit>, t: Throwable) {
-                    Log.d(MyConsts.TAG, "Ошибка записи группы", t)
+                    Log.e(MyConsts.TAG, "Ошибка сети: ${t.message}")
                 }
-            }
-            )
+            })
     }
 
     fun addGroup(group: Group) {

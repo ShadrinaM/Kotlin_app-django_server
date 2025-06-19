@@ -11,7 +11,7 @@ import com.example.list.Data.Student
 
 @Database(
     entities = [Faculty::class, Student::class, Group::class,],
-    version = 7,
+    version = 11,
     exportSchema = false
 )
 @TypeConverters(DBConverters::class)

@@ -38,7 +38,7 @@ private const val ARG_PARAM = "group_param"
 
 class StudentsListFragment : Fragment() {
 
-    // Сам добавил
+    // Сама добавила
     private lateinit var adapter: StudentAdapter
 
     companion object {
@@ -87,7 +87,7 @@ class StudentsListFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(StudentsListViewModel::class.java)
         viewModel.set_Group(group)
 
-//        Сам поменял!!
+//        //Сама поменяла
 //        viewModel.studentList.observe(viewLifecycleOwner) {
 //            binding.rvStudents.adapter=
 //                StudentAdapter(it.filter { it.groupID == group.id })
@@ -130,7 +130,7 @@ class StudentsListFragment : Fragment() {
         (requireActivity() as MainActivityCallbacks).showFragment(NamesOfFragment.STUDENT, student)
         (requireActivity() as MainActivityCallbacks).newTitle("Группа ${viewModel.group!!.name}")
     }
-// Сам поменял!!!
+// Сама поменяла!!!
 //    private inner class StudentAdapter(private val items: List<Student>)
     private inner class StudentAdapter(private var items: List<Student>)
         : RecyclerView.Adapter<StudentAdapter.ItemHolder>() {
@@ -144,7 +144,7 @@ class StudentsListFragment : Fragment() {
         }
 
         override fun getItemCount(): Int = items.size
-//    Сам поменял вот эти две строки!!!
+//    Сама поменяла вот эти две строки!!!
 //        override fun onBindViewHolder(holder: StudentAdapter.ItemHolder, position: Int) {
         override fun onBindViewHolder(holder: ItemHolder, position: Int) {
 //            holder.bind(viewModel.studentList.value!![position])
@@ -167,7 +167,7 @@ class StudentsListFragment : Fragment() {
             lastView=view
         }
 
-//    Сам вставил updateItems!!!!
+//    Сама вставила updateItems!!!!
         fun updateItems(newItems: List<Student>) {
             items = newItems
             notifyDataSetChanged()
@@ -179,7 +179,7 @@ class StudentsListFragment : Fragment() {
                 @OptIn(DelicateCoroutinesApi::class)
                 fun bind(student: Student) {
                     this.student=student
-//                    Сам поменял!!!
+//                    Сама поменяла!!!
 //                    if (student == viewModel.student)
                     if (student.id == viewModel.student?.id)
                         updateCurrentView(itemView)
