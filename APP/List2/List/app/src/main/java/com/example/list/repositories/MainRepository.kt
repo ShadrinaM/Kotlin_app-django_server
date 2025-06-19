@@ -296,8 +296,8 @@ val listOfStudent: LiveData<List<Student>> = listDB.getAllStudents()
                         for (g in groups ?: emptyList()) {
                             listDB.insertGroup(g)
                         }
+                        fetchStudents()
                     }
-                    fetchStudents()
                 }
             }
 
