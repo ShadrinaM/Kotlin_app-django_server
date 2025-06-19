@@ -16,3 +16,22 @@ class GroupSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = Student
 #         fields = ['id', 'last_name', 'first_name', 'middle_name', 'birth_date', 'phone', 'sex', 'group']
+
+# class StudentSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Student
+#         fields = ['id', 'last_name', 'first_name', 'middle_name', 'birth_date', 'group', 'phone', 'sex']
+
+# class StudentSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Student
+#         fields = ['id', 'last_name', 'first_name', 'middle_name', 
+#                  'birth_date', 'group', 'phone', 'sex']
+
+class StudentSerializer(serializers.ModelSerializer):
+    birth_date = serializers.DateField(format="%Y-%m-%d", input_formats=["%Y-%m-%d"])
+    
+    class Meta:
+        model = Student
+        fields = ['id', 'last_name', 'first_name', 'middle_name', 
+                 'birth_date', 'group', 'phone', 'sex']

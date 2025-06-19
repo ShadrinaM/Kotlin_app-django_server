@@ -369,17 +369,51 @@ val listOfStudent: LiveData<List<Student>> = listDB.getAllStudents()
         })
     }
 
+//    private fun updateStudents(student: Student) {
+//        listAPI.postStudent(student)
+//            .enqueue(object:Callback<Unit> {
+//                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+//                    if (response.code() == 200) fetchStudents()
+//                }
+//                override fun onFailure(call: Call<Unit>, t: Throwable) {
+//                    Log.d(MyConsts.TAG, "Ошибка записи студента", t)
+//                }
+//            }
+//            )
+//    }
+
     private fun updateStudents(student: Student) {
+        // Логируем отправляемые данные
+        Log.d(MyConsts.TAG, "Отправка студента на сервер: ${Gson().toJson(student)}")
+
         listAPI.postStudent(student)
-            .enqueue(object:Callback<Unit> {
+            .enqueue(object : Callback<Unit> {
                 override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
-                    if (response.code() == 200) fetchStudents()
+                    if (response.code() == 200) {
+                        Log.d(MyConsts.TAG, "Студент успешно сохранён")
+                        fetchStudents()
+                    } else {
+                        // Логируем ошибку от сервера
+                        val errorBody = response.errorBody()?.string()
+                        Log.e(MyConsts.TAG,
+                            """
+                        Ошибка при сохранении студента:
+                        Код: ${response.code()}
+                        Тело ответа: $errorBody
+                        Отправленные данные: ${Gson().toJson(student)}
+                        """.trimIndent())
+                    }
                 }
+
                 override fun onFailure(call: Call<Unit>, t: Throwable) {
-                    Log.d(MyConsts.TAG, "Ошибка записи студента", t)
+                    Log.e(MyConsts.TAG,
+                        """
+                    Сетевая ошибка при сохранении студента:
+                    Сообщение: ${t.message}
+                    Отправленные данные: ${Gson().toJson(student)}
+                    """.trimIndent())
                 }
-            }
-            )
+            })
     }
 
     fun addStudent(student: Student) {

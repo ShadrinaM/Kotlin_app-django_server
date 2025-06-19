@@ -3,4 +3,4 @@ from .models import *
 
 admin.site.register(Faculty)
 admin.site.register(Group)
-# admin.site.register(Student)
+admin.site.register(Student)

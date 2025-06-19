@@ -23,7 +23,8 @@ object ListConnection {
         .build()
 
     var gson = GsonBuilder()
-        .setDateFormat("yyyy.MM.dd")
+//        .setDateFormat("yyyy.MM.dd") // старый формат
+        .setDateFormat("yyyy-MM-dd") // формат для API
         .create()
 
     fun getClient(): Retrofit {

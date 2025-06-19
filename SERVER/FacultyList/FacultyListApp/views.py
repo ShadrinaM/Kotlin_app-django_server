@@ -78,7 +78,42 @@ def delete_group(request, id):
     except Group.DoesNotExist:
         return Response({'error': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
 
-# # СТУДЕНТЫ
+# # # СТУДЕНТЫ
+# # @api_view(['GET'])
+# # def get_students(request):
+# #     students = Student.objects.all().order_by('last_name')
+# #     serializer = StudentSerializer(students, many=True)
+# #     return Response(serializer.data)
+
+# # @api_view(['POST'])
+# # def post_student(request):
+# #     student_id = request.data.get('id', None)
+# #     if student_id is not None and int(student_id) >= 0:
+# #         try:
+# #             student = Student.objects.get(id=student_id)
+# #         except Student.DoesNotExist:
+# #             return Response({'error': 'Student not found'}, status=status.HTTP_404_NOT_FOUND)
+
+# #         serializer = StudentSerializer(student, data=request.data)
+# #     else:
+# #         serializer = StudentSerializer(data=request.data)
+
+# #     if serializer.is_valid():
+# #         serializer.save()
+# #         return Response(status=status.HTTP_200_OK)
+
+# #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# # @api_view(['DELETE'])
+# # def delete_student(request, id):
+# #     try:
+# #         student = Student.objects.get(id=id)
+# #         student.delete()
+# #         return Response(status=status.HTTP_200_OK)
+# #     except Student.DoesNotExist:
+# #         return Response({'error': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
 # @api_view(['GET'])
 # def get_students(request):
 #     students = Student.objects.all().order_by('last_name')
@@ -88,6 +123,7 @@ def delete_group(request, id):
 # @api_view(['POST'])
 # def post_student(request):
 #     student_id = request.data.get('id', None)
+
 #     if student_id is not None and int(student_id) >= 0:
 #         try:
 #             student = Student.objects.get(id=student_id)
@@ -112,3 +148,39 @@ def delete_group(request, id):
 #         return Response(status=status.HTTP_200_OK)
 #     except Student.DoesNotExist:
 #         return Response({'error': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET'])
+def get_students(request):
+    students = Student.objects.all().order_by('last_name', 'first_name')
+    serializer = StudentSerializer(students, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def post_student(request):
+    student_id = request.data.get('id', None)
+    
+    if student_id is not None and int(student_id) >= 0:
+        try:
+            student = Student.objects.get(id=student_id)
+        except Student.DoesNotExist:
+            return Response({'error': 'Student not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = StudentSerializer(student, data=request.data)
+    else:
+        serializer = StudentSerializer(data=request.data)
+    
+    if serializer.is_valid():
+        serializer.save()
+        return Response(status=status.HTTP_200_OK)
+    
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+def delete_student(request, id):
+    try:
+        student = Student.objects.get(id=id)
+        student.delete()
+        return Response(status=status.HTTP_200_OK)
+    except Student.DoesNotExist:
+        return Response({'error': 'Not found'}, status=status.HTTP_404_NOT_FOUND)

@@ -13,4 +13,8 @@ urlpatterns = [
     # path('students', views.get_students),
     # path('student', views.post_student),
     # path('student/<int:id>', views.delete_student),
+
+    path('students', views.get_students),
+    path('student', views.post_student),
+    path('student/<int:id>', views.delete_student),
 ]
