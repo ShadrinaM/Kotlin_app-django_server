@@ -22,7 +22,7 @@ import java.util.UUID
 data class Group (
     @PrimaryKey val id: Long = -1L,
     @ColumnInfo(name = "group_name") var name: String = "",
-    @ColumnInfo(name = "faculty_id")
-    @SerializedName("faculty")  // Это ключевое изменение!
-    var facultyID: Long = -1L
+    @ColumnInfo(name = "faculty_id") // название для бд
+    @SerializedName("faculty")  // для API
+    var facultyID: Long = -1L  // название для кода котлина
 )
